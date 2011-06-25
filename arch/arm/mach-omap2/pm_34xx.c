@@ -258,7 +258,7 @@ static void control_padconf_dump(void)
 {
 	int i;
 	for (i=0; i<sizeof(padconf_dump)/sizeof(struct padconf_dump); i++) {
-		printk("%20s: 0x%08x <- 0x%08x\n", padconf_dump[i].name, ((unsigned long)padconf_dump[i].value) & 0xc000c000, ((unsigned long)padconf_dump[i].pre_value) & 0xc000c000);
+		printk("%20s: 0x%08x <- 0x%08x\n", padconf_dump[i].name, ((unsigned long)padconf_dump[i].value) & 0xc000c000, ((unsigned long)padconf_dump[i].pre_value));
 	}
 }
 void control_padconf_pre_save(void)
@@ -305,6 +305,8 @@ static void (*_omap_sram_idle)(u32 *addr, int save_state);
 
 void omap_sram_idle(void)
 {
+	u32 intcps_sysconfig;
+	
 	/* Variable to tell what needs to be saved and restored
 	 * in omap_sram_idle*/
 	/* save_state = 0 => Nothing to save and restored */
@@ -339,12 +341,20 @@ void omap_sram_idle(void)
 		printk(KERN_ERR "Invalid mpu state in sram_idle\n");
 		return;
 	}
+
+	/* disable INTC autoidle, cf. errata ID i540 */
+	intcps_sysconfig = INTCPS_SYSCONFIG;
+	if (intcps_sysconfig & 0x1UL)
+		INTCPS_SYSCONFIG = intcps_sysconfig & ~1UL;
+	
 	_omap_sram_idle(context_mem, save_state);
 	/* Restore table entry modified during MMU restoration */
 	if (((PM_PREPWSTST_MPU & 0x7) == 0x0) ||
 			((PM_PREPWSTST_MPU & 0x7) == 0x1)) {
 		restore_table_entry();
 	}
+	
+	INTCPS_SYSCONFIG = intcps_sysconfig;
 }
 
 static int omap3_pm_prepare(void)
@@ -803,7 +813,7 @@ int __init omap3_pm_init(void)
 {
 	int ret;
 	printk(KERN_ERR "Power Management for TI OMAP.\n");
-
+	
 	/* Setup the delay for power supply setup delay*/
 	/* should be enough since power supply spec gives 750 µs */
 	/* VOLTOFFSET is delay from wakeup event to sys_off_mode toggling*/
@@ -811,8 +821,8 @@ int __init omap3_pm_init(void)
 	/* VOLTSETUP2 is delay between sys_off_mode toggling and end of the clock gating*/
 	/* After these delays, the clock is propagated to the full chip*/
  	PRM_VOLTSETUP2 = 0x64;
-	/* PRM_CLKSETUP=PRM_VOLTOFFSET+PRM_VOLTSETUP2*/
-	PRM_CLKSETUP = PRM_VOLTOFFSET + PRM_VOLTSETUP2;
+	/* PRM_CLKSETUP = 0x41 + 0x64; */
+	PRM_CLKSETUP = PRM_VOLTOFFSET+PRM_VOLTSETUP2;
 
 	omap3_push_sram_functions();
 	suspend_set_ops(&omap_pm_ops);

@@ -1,5 +1,5 @@
 /*
- * linux/sound/oss/davinci-audio-wm8985.c
+ * linux/sound/oss/omap2-audio-wm8985.c
  *
  * Glue audio driver for Wolson WM8985 codec
  *
@@ -2167,7 +2167,7 @@ static int codec_initialize(struct audio_state_s * state, void *data)
 		   machine_is_archos_a5hg() || machine_is_archos_a5sg() ||
 		   machine_is_archos_a5hgw() || machine_is_archos_a5sgw() ||
 		   machine_is_archos_a5sc() || machine_is_archos_a5st() ||
-		   machine_is_archos_a5gcam() ) {
+		   machine_is_archos_a5gcam() || machine_is_archos_a48() ) {
 		is_gen7=1;
 	} else {
 		is_gen7=0;

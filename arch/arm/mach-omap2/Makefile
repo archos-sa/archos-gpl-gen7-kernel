@@ -99,6 +99,7 @@ obj-$(CONFIG_MACH_OVERO)		+= board-overo.o \
 					   usb-ehci.o
 obj-$(CONFIG_MACH_ARCHOS_A5H)		+= board-archos-a5h.o
 obj-$(CONFIG_MACH_ARCHOS_A5S)		+= board-archos-a5s.o
+obj-$(CONFIG_MACH_ARCHOS_A48)		+= board-archos-a48.o
 obj-$(CONFIG_MACH_ARCHOS)		+= board-archosg6.o \
 					   board-archosg7.o \
 					   archos-hsmmc.o \

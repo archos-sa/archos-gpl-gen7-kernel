@@ -141,7 +141,7 @@ void __init usb_ehci_init(void)
 		   machine_is_archos_a5hg() || machine_is_archos_a5sg() ||
 		   machine_is_archos_a5hgw() || machine_is_archos_a5sgw() ||
 		   machine_is_archos_a5sc() || machine_is_archos_a5st() ||
-		   machine_is_archos_a5gcam()	) {
+		   machine_is_archos_a5gcam() || machine_is_archos_a48() ) {
 			/* pin mux for EHCI Port 1 */
 			omap_cfg_reg(AE10_3430_USB1HS_PHY_CLK);
 			omap_cfg_reg(AF10_3430_USB1HS_PHY_STP);

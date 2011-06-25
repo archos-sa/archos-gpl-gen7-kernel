@@ -148,6 +148,11 @@ config MACH_ARCHOS_A5H
 	depends on ARCH_OMAP3 && ARCH_OMAP34XX
 	select MACH_ARCHOS
 
+config MACH_ARCHOS_A48
+	bool "Archos A48 board"
+	depends on ARCH_OMAP3 && ARCH_OMAP34XX
+	select MACH_ARCHOS
+
 config MACH_ARCHOS
 	bool
 	select VIDEO_OMAP3_ISP if VIDEO_OMAP3_CAM

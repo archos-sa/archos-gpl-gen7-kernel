@@ -1026,7 +1026,7 @@ static int __init archos_soc_init(void)
 		!machine_is_archos_a5sg() && !machine_is_archos_a5hg() &&
 		!machine_is_archos_a5sgw() && !machine_is_archos_a5hgw() &&
 		!machine_is_archos_a5gcam() && !machine_is_archos_a5sc() &&
-		!machine_is_archos_a5st()) {
+		!machine_is_archos_a5st() && !machine_is_archos_a48()) {
 		pr_debug("Not an Archos Device!\n");
 		return -ENODEV;
 	}

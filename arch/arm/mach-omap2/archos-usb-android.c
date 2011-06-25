@@ -46,6 +46,8 @@ static int __init usb_android_init(void)
 		sprintf(android_usb_pdata.serial_number, "A5S-%08X-%08X-%08X-%08X", prod_id[0],prod_id[1],prod_id[2],prod_id[3]);
 	} else if ( machine_is_archos_a5h() ) {
 		sprintf(android_usb_pdata.serial_number, "A5H-%08X-%08X-%08X-%08X", prod_id[0],prod_id[1],prod_id[2],prod_id[3]);
+	} else if ( machine_is_archos_a48() ) {
+		sprintf(android_usb_pdata.serial_number, "A48-%08X-%08X-%08X-%08X", prod_id[0],prod_id[1],prod_id[2],prod_id[3]);
 	} else {
 		sprintf(android_usb_pdata.serial_number, "A5x-%08X-%08X-%08X-%08X", prod_id[0],prod_id[1],prod_id[2],prod_id[3]);
 	}
